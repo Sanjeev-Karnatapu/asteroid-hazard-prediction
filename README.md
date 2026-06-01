@@ -1,119 +1,141 @@
 # ☄️ Asteroid Hazard Prediction System
 
-## Overview
+A Machine Learning web application that predicts whether a Near-Earth Asteroid (NEA) is hazardous based on its physical and orbital characteristics.
 
-This project uses Machine Learning to predict whether a Near-Earth Asteroid is hazardous using NASA asteroid observation data.
+## 🚀 Live Demo
 
-The system performs data preprocessing, exploratory data analysis, feature engineering, model training, hyperparameter tuning, and deployment through an interactive Streamlit web application.
+https://asteroid-hazard-prediction-veunrokxjpsrwlajmqzheu.streamlit.app/
 
----
+## 📌 Project Overview
 
-## Dataset
+This project uses machine learning to classify asteroids as **Hazardous** or **Non-Hazardous** based on astronomical observations obtained from NASA Near-Earth Object datasets.
 
-NASA Near Earth Objects (NEO) Dataset
+The system performs data preprocessing, feature engineering, model training, evaluation, and deployment through a Streamlit web application.
 
-* 90,836 asteroid observations
-* Binary classification:
+## 📊 Dataset Information
 
-  * Hazardous
-  * Non-Hazardous
+* Source: NASA Near-Earth Object Dataset
+* Records: 90,836 asteroids
+* Target Variable: `hazardous`
+* Class Distribution:
 
----
+  * Non-Hazardous: ~90.3%
+  * Hazardous: ~9.7%
 
-## Features Used
+## 🔧 Feature Engineering
+
+Original Features:
+
+* Estimated Diameter Minimum
+* Estimated Diameter Maximum
+* Relative Velocity
+* Miss Distance
+* Absolute Magnitude
+
+Engineered Feature:
+
+* Average Diameter
+
+Feature Formula:
+
+avg_diameter = (est_diameter_min + est_diameter_max) / 2
+
+Final Features Used:
 
 * Relative Velocity
 * Miss Distance
 * Absolute Magnitude
 * Average Diameter
 
----
+## 🤖 Machine Learning Pipeline
 
-## Machine Learning Pipeline
+### Data Preprocessing
 
-1. Data Cleaning
-2. Exploratory Data Analysis
-3. Feature Engineering
-4. Handling Class Imbalance
-5. Model Training
-6. Hyperparameter Tuning
-7. Model Evaluation
-8. Streamlit Deployment
+* Removed irrelevant columns
+* Converted target labels
+* Created engineered features
+* Train-Test Split (80:20)
+* Stratified Sampling
 
----
+### Class Imbalance Handling
 
-## Models Evaluated
+The dataset was highly imbalanced.
 
-| Model                        | Accuracy | Hazard Recall |
-| ---------------------------- | -------- | ------------- |
-| Logistic Regression          | 90%      | 8%            |
-| Weighted Logistic Regression | 79%      | 93%           |
-| Random Forest                | 92%      | 36%           |
-| Tuned Random Forest          | 80%      | 98%           |
+Techniques explored:
 
----
+* Baseline Random Forest
+* Random Forest with Class Weights
+* SMOTE Oversampling
 
-## Best Model
+### Algorithms Evaluated
 
-### Tuned Random Forest
+1. Random Forest Classifier
+2. Random Forest + Class Weights
+3. Random Forest + SMOTE
 
-Performance:
+## 📈 Model Evaluation
 
-* Accuracy: 80%
-* Hazardous Recall: 98%
-* Only 28 hazardous asteroids missed during testing
+Metrics Used:
 
----
+* Accuracy
+* Precision
+* Recall
+* F1 Score
+* Confusion Matrix
 
-## Application Screenshots
+### Final Model Performance
 
-### Home Screen
+Accuracy: 92%
 
-![Home Screen](images/home.png)
+Hazardous Class:
 
-### Safe Asteroid Prediction
+* Precision: 0.62
+* Recall: 0.36
+* F1 Score: 0.46
 
-![Safe Prediction](images/safe_prediction.png)
+Confusion Matrix:
 
-### Hazardous Asteroid Prediction
+[[16011   389]
+[ 1123   645]]
 
-![Hazardous Prediction](images/hazardous_prediction.png)
+## 🎯 Feature Importance
 
----
+| Feature            | Importance |
+| ------------------ | ---------- |
+| Absolute Magnitude | 38.6%      |
+| Average Diameter   | 30.1%      |
+| Relative Velocity  | 16.8%      |
+| Miss Distance      | 14.6%      |
 
-## Technologies Used
+Key Insight:
+
+Absolute Magnitude and Average Diameter were the most influential predictors for determining asteroid hazard status.
+
+## 🌐 Deployment
+
+* Frontend: Streamlit
+* Model Serialization: Joblib
+* Version Control: Git & GitHub
+* Cloud Deployment: Streamlit Community Cloud
+
+## 🛠️ Tech Stack
 
 * Python
 * Pandas
 * NumPy
+* Matplotlib
+* Seaborn
 * Scikit-Learn
+* Imbalanced-Learn (SMOTE)
 * Streamlit
 * Joblib
-* Matplotlib
 
----
+## ▶️ Run Locally
 
-## Project Structure
+git clone https://github.com/Sanjeev-Karnatapu/asteroid-hazard-prediction.git
 
-```text
-asteroid_hazard_prediction/
+cd asteroid-hazard-prediction
 
-├── app/
-├── data/
-├── images/
-├── models/
-├── notebooks/
-├── README.md
-├── requirements.txt
-└── .gitignore
-```
-
----
-
-## Run Locally
-
-```bash
 pip install -r requirements.txt
 
 streamlit run app/streamlit_app.py
-```
